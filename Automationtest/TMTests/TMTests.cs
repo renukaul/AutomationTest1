@@ -7,56 +7,47 @@ using System;
 using System.Threading;
 
 
-namespace Automationtest
+namespace Automationtest.TMTests
 {
        [TestFixture]
-    
+    [Parallelizable]
     internal class TMTests : CommonDriver
     {
        
 
-       [SetUp]
-       public void LoginFunction()
+        [Test,Order(1), Description("This will create new records") ]
+        public void TC001_CreateTM_Test()
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
 
-            TmLogin login = new TmLogin();
-            login.LoginTest(driver);
             TMHome homepage = new TMHome();
-            homepage.TMHomePage(driver);
+            homepage.GoToTMHomePage(driver);
 
-        }
-
-        [Test]
-        public void CreateTM_Test()
-        {
-            TmPage tmPageObject  = new TmPage();
+             TmPage tmPageObject  = new TmPage();
             tmPageObject.createRecord(driver);
         }
 
-        [Test]
-        public void CreditTM_Test()
+        [Test, Order(2) ,Description("This will Edit  records")]
+        public void TC002_CreditTM_Test()
         {
+
+            TMHome homepage = new TMHome();
+            homepage.GoToTMHomePage(driver);
 
             TmPage tmPageObject = new TmPage();
             tmPageObject.editRecord(driver);
         }
 
-        [Test]
-        public void DeleteTM_Test()
+        [Test, Order(3), Description("This will Delete  records")]
+        public void TC003_DeleteTM_Test()
         {
+            TMHome homepage = new TMHome();
+            homepage.GoToTMHomePage(driver);
+
             TmPage tmPageObject = new TmPage();
             tmPageObject.deleteRecord(driver);
 
         }
 
-        [TearDown]
-        public void CloseTM_Test()
-        {
-            
-           
-
-        }
+      
     }
 }

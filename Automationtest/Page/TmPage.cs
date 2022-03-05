@@ -134,15 +134,24 @@ namespace Automationtest.Page
                 // check if record create is present in the table and has expected value
                 IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
                 actualCode.Click();
-                Assert.That(actualCode.Text == "Renu", "Test Failed");
+                IWebElement actualTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+                IWebElement actualDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+                IWebElement actualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+                
+                Assert.That(actualCode.Text == "Renu", "Actual Code and Expected code do not match");
+                Assert.That(actualTypeCode.Text == "M", "Actual TypeCode and Expected TypeCode do not match");
+                Assert.That(actualDescription.Text == "AutomationTesting", "Actual Description and Expected Descriptiondo not match");
+                Assert.That(actualPrice.Text == "$104.00", "Actual Price and Expected Price do not match");
+
+
 
                 /* if (actualCode.Text == "Renu")
                  {
-                     Console.WriteLine("Material record Updated  sucessfully,Test Passed");
+                     Assert.Pass("Material record Updated  sucessfully,Test Passed");
                  }
                  else
                  {
-                     Console.WriteLine("Update Test Failed.");
+                     Assert.Fail("Update Test Failed.");
                  }*/
 
             }
@@ -155,16 +164,15 @@ namespace Automationtest.Page
         }
 
 
-       public void deleteRecord( IWebDriver driver)
+        public void deleteRecord(IWebDriver driver)
         {
             wait.waittovisibility(driver, "xPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[1]/td[1]", 2);
 
-            
             // click on go to last page button
             IWebElement gotoLastPageButton = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span"));
             gotoLastPageButton.Click();
-            wait.waitByClick(driver, "xPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[last()]/a[2]", 2);
-            //Thread.Sleep(3000);
+           // wait.waitByClick(driver, "xPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[last()]/a[2]", 2);
+            Thread.Sleep(3000);
 
 
             // click on delete button
@@ -174,12 +182,17 @@ namespace Automationtest.Page
                 delButton.Click();
                 IAlert al = driver.SwitchTo().Alert();
                 al.Accept();
-                Console.WriteLine("Record Deleted Successfully");
+               
+               
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Record not deleted");
+              Assert.Fail(ex.Message + "Record not deleted");
             }
+           
+            Assert.Pass("Record Deleted Successfully");
+            driver.Navigate().Refresh();
+
 
         }
     }
