@@ -34,7 +34,7 @@ namespace Automationtest.TMTests
             homepage.GoToTMHomePage(driver);
 
             TmPage tmPageObject = new TmPage();
-            tmPageObject.editRecord(driver);
+            //tmPageObject.editRecord(driver);
         }
 
         [Test, Order(3), Description("This will Delete  records")]

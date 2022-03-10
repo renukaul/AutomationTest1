@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Automationtest.Utilities
 {
-    internal class CommonDriver
+    public class CommonDriver
     {
         public IWebDriver driver;
 

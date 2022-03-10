@@ -12,7 +12,7 @@ namespace Automationtest.Page
     {
        
 
-        public  void createRecord(IWebDriver driver)
+        public  void createRecord(IWebDriver driver )
         {
            
             // Create Time and Material Record
@@ -31,6 +31,8 @@ namespace Automationtest.Page
             // Select material from Typecode Dropdown
             IWebElement TypecodeDropdown = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[1]/div/span[1]/span/span[2]/span"));
             TypecodeDropdown.Click();
+
+            //Start putting values 
 
             IWebElement MaterialOption = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/li[2]"));
             MaterialOption.Click();
@@ -62,8 +64,8 @@ namespace Automationtest.Page
          
 
             // check if record create is present in the table and has expected value
-            IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
-            actualCode.Click();
+            
+           /* actualCode.Click();
 
             if (actualCode.Text == "Renu")
             {
@@ -72,15 +74,41 @@ namespace Automationtest.Page
             else
             {
                 Console.WriteLine("Test Failed.");
-            }
+            }*/
+
         }
 
-        public void editRecord(IWebDriver driver)
+
+        public string getCode(IWebDriver driver)
+        {
+            IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            return actualCode.Text;
+        }
+
+        public string getTypeCode(IWebDriver driver)    
+        {
+            IWebElement typecode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+            return typecode.Text;
+        }
+        public string getDescription(IWebDriver driver)
+        {
+            IWebElement description = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+            return description.Text;
+
+        }
+
+        public string getPrice(IWebDriver driver)
+        {
+            IWebElement price = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+            return price.Text;
+        }
+
+        public void editRecord(IWebDriver driver, string description)
         {
             Console.WriteLine("Edit Record Function Called");
 
-            try
-            {
+           try
+             {
                 wait.waittovisibility(driver, "xPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[1]/td[1]", 2);
 
                 // click on go to last page button
@@ -105,7 +133,7 @@ namespace Automationtest.Page
                 // Identify the description textbox and input a descrition
                 IWebElement DescriptionTexbox = driver.FindElement(By.Id("Description"));
                 DescriptionTexbox.Clear();
-                DescriptionTexbox.SendKeys("AutomationTesting");
+                DescriptionTexbox.SendKeys(description);
 
                 // Identify the Price Per Unit textbox and input a Price Per Unit
                 IWebElement PriceTage = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
@@ -135,12 +163,12 @@ namespace Automationtest.Page
                 IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
                 actualCode.Click();
                 IWebElement actualTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
-                IWebElement actualDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+                
                 IWebElement actualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
                 
                 Assert.That(actualCode.Text == "Renu", "Actual Code and Expected code do not match");
                 Assert.That(actualTypeCode.Text == "M", "Actual TypeCode and Expected TypeCode do not match");
-                Assert.That(actualDescription.Text == "AutomationTesting", "Actual Description and Expected Descriptiondo not match");
+                
                 Assert.That(actualPrice.Text == "$104.00", "Actual Price and Expected Price do not match");
 
 
@@ -154,15 +182,24 @@ namespace Automationtest.Page
                      Assert.Fail("Update Test Failed.");
                  }*/
 
+               
+
             }
+
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
 
+        }
+       
+        public string GetEditedDescription(IWebDriver driver)
+        {
+
+            IWebElement actualDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+            return actualDescription.Text;
 
         }
-
 
         public void deleteRecord(IWebDriver driver)
         {
