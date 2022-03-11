@@ -13,13 +13,13 @@ Scenario: Create T & Material page with valid data
 Scenario Outline: Edit T & Material page with valid data
 	Given I logged it sucessfully 
 	And I  nevigate  to  T & M page
-	When Update '<Description>' on an existing  T & M record
-	Then The record shoub have the  updated '<Description>' 
+	When Update '<Description>','<TypeCode>','<price>' on an existing  T & M record
+	Then The record shoub have the  updated '<Description>' ,'<TypeCode>','<price>'
 
 	Examples: 
-	| Description         |
-	| AutomationTesting11 |
-	| UnitTest 54         |
-	| RegressionTest 76   |
+	| Description         | TypeCode | price |
+	| AutomationTesting11 | T		 | 123   |
+	| UnitTest 54         | T        | 76    |
+	| RegressionTest 76   | T        | 45    |
 
 	

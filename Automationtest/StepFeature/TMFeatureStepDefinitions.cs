@@ -74,7 +74,30 @@ namespace Automationtest
 
         }
 
-        [When(@"Update '([^']*)' on an existing  T & M record")]
+        [When(@"Update '([^']*)','([^']*)','([^']*)' on an existing  T & M record")]
+        public void WhenUpdateOnAnExistingTMRecord(string p0, string p1, string p2)
+        {
+            tmPageObject.editRecord(driver, p0, p1, p2);
+
+        }
+
+        [Then(@"The record shoub have the  updated '([^']*)' ,'([^']*)','([^']*)'")]
+        public void ThenTheRecordShoubHaveTheUpdated(string p0, string p1, string p2)
+        {
+            string description = tmPageObject.GetEditedDescription(driver);
+            string Typecode  = tmPageObject.GetEditedTypeCode(driver);
+            string price = tmPageObject.GetEditedPrice(driver);
+
+            Assert.That(description == p0, "Actual description and expected description does not match");
+
+            Assert.That(Typecode == p1, "Actual code and expected code does not match");
+
+          //  Assert.That(price == "$"+ p2 + ".00", "Actual price and expected price does not match");
+
+        }
+
+
+        /*[When(@"Update '([^']*)' on an existing  T & M record")]
         public void WhenUpdateOnAnExistingTMRecord(string p0)
         {
            // homepage.GoToTMHomePage(driver);
@@ -90,7 +113,7 @@ namespace Automationtest
             Assert.That(editeddescription == p0, "Actual Description and Expected Descriptiondo not match");
 
 
-        }
+        }*/
 
 
 
@@ -100,7 +123,7 @@ namespace Automationtest
 
 
 
-        
+
 
 
 

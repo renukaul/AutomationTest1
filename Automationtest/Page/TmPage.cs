@@ -36,6 +36,7 @@ namespace Automationtest.Page
 
             IWebElement MaterialOption = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/li[2]"));
             MaterialOption.Click();
+            wait.waitByClick(driver, "Id", "Code", 2);
 
             // Identify the code textbox and input a code
             IWebElement CodeTextbox = driver.FindElement(By.Id("Code"));
@@ -103,7 +104,7 @@ namespace Automationtest.Page
             return price.Text;
         }
 
-        public void editRecord(IWebDriver driver, string description)
+        public void editRecord(IWebDriver driver, string description,string TypeCode,string Price)
         {
             Console.WriteLine("Edit Record Function Called");
 
@@ -123,27 +124,30 @@ namespace Automationtest.Page
                 TypecodeDropdown.Click();
                 wait.waitByClick(driver, "xPath", "//*[@id='TypeCode_listbox']/li[1]", 2);
 
+                IWebElement MaterialOption = null;
+                if (TypeCode == "M")
+                 MaterialOption = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/li[1]"));
+                else if(TypeCode == "T")
+                 MaterialOption = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/li[2]"));
 
-                IWebElement MaterialOption = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/li[1]"));
                 MaterialOption.Click();
                 wait.waitByClick(driver, "Id", "Description", 2);
 
-
+                
 
                 // Identify the description textbox and input a descrition
                 IWebElement DescriptionTexbox = driver.FindElement(By.Id("Description"));
                 DescriptionTexbox.Clear();
                 DescriptionTexbox.SendKeys(description);
 
+               
                 // Identify the Price Per Unit textbox and input a Price Per Unit
                 IWebElement PriceTage = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
                 PriceTage.Click();
-
                 IWebElement PriceTextbox = driver.FindElement(By.Id("Price"));
                 PriceTextbox.Clear();
                 PriceTage.Click();
-
-                PriceTextbox.SendKeys("104");
+                PriceTextbox.SendKeys(Price);
 
                 // Click Save button
                 IWebElement SaveButton = driver.FindElement(By.Id("SaveButton"));
@@ -160,17 +164,17 @@ namespace Automationtest.Page
 
 
                 // check if record create is present in the table and has expected value
-                IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
-                actualCode.Click();
-                IWebElement actualTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+               // IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+               // actualCode.Click();
+               // IWebElement actualTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
                 
-                IWebElement actualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+               // IWebElement actualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
                 
-                Assert.That(actualCode.Text == "Renu", "Actual Code and Expected code do not match");
+            /*    Assert.That(actualCode.Text == "Renu", "Actual Code and Expected code do not match");
                 Assert.That(actualTypeCode.Text == "M", "Actual TypeCode and Expected TypeCode do not match");
                 
                 Assert.That(actualPrice.Text == "$104.00", "Actual Price and Expected Price do not match");
-
+*/
 
 
                 /* if (actualCode.Text == "Renu")
@@ -201,6 +205,20 @@ namespace Automationtest.Page
 
         }
 
+        public string GetEditedTypeCode(IWebDriver driver)
+        {
+            IWebElement actualCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+            return actualCode.Text;
+
+
+        }
+        public string GetEditedPrice(IWebDriver driver)
+        {
+            IWebElement actualPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+            return actualPrice.Text;
+
+
+        }
         public void deleteRecord(IWebDriver driver)
         {
             wait.waittovisibility(driver, "xPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[1]/td[1]", 2);
