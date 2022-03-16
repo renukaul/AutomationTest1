@@ -92,7 +92,7 @@ namespace Automationtest
 
             Assert.That(Typecode == p1, "Actual code and expected code does not match");
 
-          //  Assert.That(price == "$"+ p2 + ".00", "Actual price and expected price does not match");
+            Assert.That(price == "$"+ p2 + ".00", "Actual price and expected price does not match");
 
         }
 
