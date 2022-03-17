@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "b31bb8ff-4801-4f69-86e6-698a20f9976c",
+		"name": "CRUDE2E",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new record in database",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"{// Assert 1:Check response status\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"    \r",
+							"    }\r",
+							"\r",
+							"    {\r",
+							"        // Assert 2:Check response value check\r",
+							"   \r",
+							"\r",
+							"    //pm.test(\"Your test name\", function () {\r",
+							"      //  var jsonData = pm.response.json();\r",
+							"     //   pm.expect(jsonData.data.name).to.eql(\"Renu Test Analyst create test\");\r",
+							"\r",
+							"        pm.test(\"Body matches string\", function () {\r",
+							"            pm.expect(pm.response.text()).to.include(\"Renu\");\r",
+							"        });\r",
+							"\r",
+							"        pm.test(\"Body matches string\", function () {\r",
+							"            pm.expect(pm.response.text()).to.include(\"123344\");\r",
+							"        });\r",
+							"        \r",
+							"        pm.test(\"Body matches string\", function () {\r",
+							"            pm.expect(pm.response.text()).to.include(\"23\");\r",
+							"        });\r",
+							"    //});\r",
+							"\r",
+							"    pm.test(\"check key value Pair\", function () {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.data.name).to.eql(\"Renu\");\r",
+							"        pm.expect(jsonData.data.salary).to.eql(\"123344\");\r",
+							"        pm.expect(jsonData.data.age).to.eql(\"23\");\r",
+							"\r",
+							"\r",
+							"    });\r",
+							"    \r",
+							"    }\r",
+							"\r",
+							"     var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"EmpId\",jsonData.data.id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n        \"name\": \"Renu Test Var\",\r\n        \"salary\": \"123344\",\r\n        \"age\": \"23\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/create",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an employee record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"{// Assert 1:Check response status\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"    \r",
+							"    }\r",
+							"\r",
+							"    {\r",
+							"        // Assert 2:Check response body\r",
+							"   \r",
+							"\r",
+							"    pm.test(\"Your test name\", function () {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.data.name).to.eql(\"Renu Test\");\r",
+							"    });\r",
+							"\r",
+							"    \r",
+							"    }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Renu Test\",\r\n    \"salary\": \"99998888\",\r\n    \"age\": \"23\"\r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/update/4372",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"update",
+						"4372"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an employee record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"{//Assert 1 : Status Code\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"}\r",
+							"\r",
+							"{ // Assert 2  : Response value check\r",
+							"\r",
+							"    pm.test(\"Check delete key value\", function () {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.status).to.eql(\"success\");\r",
+							"        pm.expect(jsonData.data.toString()).to.eql(pm.environment.get(\"EmpId\").toString());\r",
+							"         pm.expect(jsonData.message).to.eql(\"Successfully! Record has been deleted\");\r",
+							"    });\r",
+							"\r",
+							"\r",
+							"\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/delete/{{EmpId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"delete",
+						"{{EmpId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
